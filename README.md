@@ -1,6 +1,6 @@
-# qt6-browser-app
+# Aligned Desktop
 
-This project is a simple Qt6 application that displays an HTML file in its own browser window. It allows users to toggle between windowed and fullscreen modes.
+This project is a simple Qt6 application that displays a the Aligned web game in its own browser window. It allows users to toggle between windowed and fullscreen modes.
 
 ## Project Structure
 
