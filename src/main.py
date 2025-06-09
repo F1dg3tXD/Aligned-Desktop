@@ -9,7 +9,7 @@ os.environ["QTWEBENGINE_DISABLE_SANDBOX"] = "1"
 class BrowserWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Qt6 Browser")
+        self.setWindowTitle("Aligned")
         self.browser = QWebEngineView()
         self.setCentralWidget(self.browser)
         self.load_html_file()
@@ -28,7 +28,9 @@ class BrowserWindow(QMainWindow):
         file_menu.addAction(fullscreen_action)
 
     def load_html_file(self):
-        self.browser.setUrl(QUrl("https://docs.google.com/presentation/d/1DSuljNYH39cajCwWPA4Ky0JV-qh13_mh9ayY41YUT9w/embed?start=true"))
+        self.browser.setUrl(QUrl(
+            "https://docs.google.com/presentation/d/1DSuljNYH39cajCwWPA4Ky0JV-qh13_mh9ayY41YUT9w/embed?rm=minimal"
+        ))
 
     def toggle_fullscreen(self):
         if self.isFullScreen():
