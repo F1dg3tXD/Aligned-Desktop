@@ -1,10 +1,24 @@
-from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog
+from PyQt6.QtWidgets import QApplication, QMainWindow
 from PyQt6.QtGui import QAction
 from PyQt6.QtWebEngineWidgets import QWebEngineView
-from PyQt6.QtCore import QUrl
+from PyQt6.QtWebEngineCore import QWebEngineProfile
+from PyQt6.QtCore import QUrl, Qt
 import sys
 import os
+import webbrowser
 os.environ["QTWEBENGINE_DISABLE_SANDBOX"] = "1"
+# Set remote debugging port before QApplication is created
+os.environ["QTWEBENGINE_REMOTE_DEBUGGING"] = "9222"
+
+app = QApplication(sys.argv)  # Instantiate QApplication first
+
+# Create a QWebEngineProfile and set a larger cache size (e.g., 1 GB)
+profile = QWebEngineProfile.defaultProfile()
+profile.setHttpCacheMaximumSize(1024 * 1024 * 1024)  # 1 GB
+profile.setHttpCacheType(QWebEngineProfile.HttpCacheType.DiskHttpCache)
+profile.settings().setAttribute(
+    profile.settings().WebAttribute.PluginsEnabled, False
+)
 
 class BrowserWindow(QMainWindow):
     def __init__(self):
@@ -38,8 +52,13 @@ class BrowserWindow(QMainWindow):
         else:
             self.showFullScreen()
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key.Key_F2:
+            # Open Chrome DevTools for the running QWebEngineView
+            webbrowser.open("http://localhost:9222")
+        super().keyPressEvent(event)
+
 def main():
-    app = QApplication(sys.argv)
     window = BrowserWindow()
     window.show()
     sys.exit(app.exec())
